@@ -1,5 +1,7 @@
 package todoapplication.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -29,7 +31,13 @@ public class Users {
 
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
-
+	
+	@OneToMany(mappedBy = "projectOwner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Project> projects;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Label> labels;
+	
 	public Users() {
 		super();
 	}
@@ -89,6 +97,23 @@ public class Users {
 	public void setRole(UserRole role) {
 		this.role = role;
 	}
+	
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+
+	public List<Label> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(List<Label> labels) {
+		this.labels = labels;
+	}
 
 	@Override
 	public int hashCode() {
@@ -118,8 +143,11 @@ public class Users {
 	@Override
 	public String toString() {
 		return "Users [id=" + id + ", username=" + username + ", email=" + email + ", name=" + name + ", lastName="
-				+ lastName + ", password=" + password + ", role=" + role + "]";
+				+ lastName + ", password=" + password + ", role=" + role + ", projects=" + projects + ", labels="
+				+ labels + "]";
 	}
+
+	
 	
 	
 }
