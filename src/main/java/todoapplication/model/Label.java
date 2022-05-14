@@ -21,7 +21,7 @@ public class Label {
 	private String name;
 	
 	@ManyToOne
-	private Users user;
+	private User user;
 	
 	@ManyToMany(mappedBy = "taskLabels")
 	private List<Task> labelTasks;
@@ -49,11 +49,11 @@ public class Label {
 		this.name = name;
 	}
 
-	public Users getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(Users user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

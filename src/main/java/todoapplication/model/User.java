@@ -7,8 +7,8 @@ import javax.persistence.*;
 
 import todoapplication.enumeration.UserRole;
 
-@Entity
-public class Users {
+@Entity @Table(name = "users")
+public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +38,7 @@ public class Users {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Label> labels;
 	
-	public Users() {
+	public User() {
 		super();
 	}
 
@@ -131,7 +131,7 @@ public class Users {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Users other = (Users) obj;
+		User other = (User) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

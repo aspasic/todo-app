@@ -1,17 +1,17 @@
 package todoapplication.repository;
 
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import todoapplication.model.Users;
-
-import java.util.Optional;
+import todoapplication.model.User;
 
 @Repository
-public interface UsersRepository extends JpaRepository<Users, Long> {
+public interface UsersRepository extends JpaRepository<User, Long> {
 
-    Optional<Users> findFirstByUsername(String username);
+    Optional<User> findFirstByUsername(String username);
 
-    Optional<Users> findFirstByUsernameAndPassword(String username,String password);
+    Optional<User> findFirstByUsernameAndPassword(String username,String password);
 }

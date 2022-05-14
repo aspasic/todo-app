@@ -1,9 +1,16 @@
 package todoapplication.web.controller;
 
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,18 +22,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import todoapplication.model.Users;
-import todoapplication.security.TokenUtils;
-import todoapplication.service.UsersService;
-import todoapplication.support.UsersDtoToUsers;
-import todoapplication.support.UsersToUsersDto;
-import todoapplication.web.dto.AuthUsersDto;
-import todoapplication.web.dto.UsersDTO;
-import todoapplication.web.dto.UsersChangePasswordDto;
-import todoapplication.web.dto.UsersRegistrationDTO;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,13 +29,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+import todoapplication.model.User;
+import todoapplication.security.TokenUtils;
+import todoapplication.service.UsersService;
+import todoapplication.support.UsersDtoToUsers;
+import todoapplication.support.UsersToUsersDto;
+import todoapplication.web.dto.AuthUsersDto;
+import todoapplication.web.dto.UserDTO;
+import todoapplication.web.dto.UsersRegistrationDTO;
 
 @RestController
 @RequestMapping(value = "/api/korisnici", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -69,13 +67,13 @@ public class UsersController {
 
     @PreAuthorize("permitAll()")
     @PostMapping
-    public ResponseEntity<UsersDTO> create(@RequestBody @Validated UsersRegistrationDTO dto){
+    public ResponseEntity<UserDTO> create(@RequestBody @Validated UsersRegistrationDTO dto){
 
         if(dto.getId() != null || !dto.getPassword().equals(dto.getRepeatedPassword())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Users user = toUser.convert(dto);
+        User user = toUser.convert(dto);
 
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         user.setPassword(encodedPassword);
@@ -85,21 +83,21 @@ public class UsersController {
 
     @PreAuthorize("hasAnyRole('KORISNIK', 'ADMIN')")
     @PutMapping(value= "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UsersDTO> update(@PathVariable Long id, @Valid @RequestBody UsersDTO userDto){
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserDTO userDto){
 
         if(!id.equals(userDto.getId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Users user = toUser.convert(userDto);
+        User user = toUser.convert(userDto);
 
         return new ResponseEntity<>(toUserDto.convert(usersService.save(user)),HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('KORISNIK', 'ADMIN')")
     @GetMapping("/{id}")
-    public ResponseEntity<UsersDTO> get(@PathVariable Long id){
-        Optional<Users> user = usersService.findOne(id);
+    public ResponseEntity<UserDTO> get(@PathVariable Long id){
+        Optional<User> user = usersService.findOne(id);
 
         if(user.isPresent()) {
             return new ResponseEntity<>(toUserDto.convert(user.get()), HttpStatus.OK);
@@ -111,8 +109,8 @@ public class UsersController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public ResponseEntity<List<UsersDTO>> get(@RequestParam(defaultValue="0") int page){
-        Page<Users> users = usersService.findAll(page);
+    public ResponseEntity<List<UserDTO>> get(@RequestParam(defaultValue="0") int page){
+        Page<User> users = usersService.findAll(page);
         return new ResponseEntity<>(toUserDto.convert(users.getContent()), HttpStatus.OK);
     }
 

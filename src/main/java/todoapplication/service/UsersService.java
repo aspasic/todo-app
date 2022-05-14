@@ -2,24 +2,26 @@ package todoapplication.service;
 
 
 
-import org.springframework.data.domain.Page;
-
-import todoapplication.model.Users;
-
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+
+import todoapplication.model.User;
+
+
 public interface UsersService {
 
-    Optional<Users> findOne(Long id);
+    Optional<User> findOne(Long id);
 
-    List<Users> findAll();
+    List<User> findAll();
 
-    Page<Users> findAll(int pageNumber);
+    Page<User> findAll(int pageNumber);
 
-    Users save(Users user);
+    User save(User user);
 
     void delete(Long id);
 
-    Optional<Users> findbyUsername(String username);
+    Optional<User> findbyUsername(String username);
 }

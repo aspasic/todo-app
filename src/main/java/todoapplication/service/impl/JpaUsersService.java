@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import todoapplication.enumeration.UserRole;
-import todoapplication.model.Users;
+import todoapplication.model.User;
 import todoapplication.repository.UsersRepository;
 import todoapplication.service.UsersService;
 
@@ -26,22 +26,22 @@ public class JpaUsersService implements UsersService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Optional<Users> findOne(Long id) {
+    public Optional<User> findOne(Long id) {
         return usersRepository.findById(id);
     }
 
     @Override
-    public List<Users> findAll() {
+    public List<User> findAll() {
         return usersRepository.findAll();
     }
 
     @Override
-    public Page<Users> findAll(int pageNumber) {
+    public Page<User> findAll(int pageNumber) {
         return usersRepository.findAll(PageRequest.of(pageNumber,10));
     }
 
     @Override
-    public Users save(Users user) {
+    public User save(User user) {
         user.setRole(UserRole.KORISNIK);
         return usersRepository.save(user);
     }
@@ -52,7 +52,7 @@ public class JpaUsersService implements UsersService {
     }
 
     @Override
-    public Optional<Users> findbyUsername(String username) {
+    public Optional<User> findbyUsername(String username) {
         return usersRepository.findFirstByUsername(username);
     }
 

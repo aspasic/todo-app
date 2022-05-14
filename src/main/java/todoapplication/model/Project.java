@@ -23,7 +23,7 @@ public class Project {
 	private String name;
 	
 	@ManyToOne
-	private Users projectOwner;
+	private User projectOwner;
 	
 	@OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Task> tasks;
@@ -48,11 +48,11 @@ public class Project {
 		this.name = name;
 	}
 
-	public Users getProjectOwner() {
+	public User getProjectOwner() {
 		return projectOwner;
 	}
 
-	public void setProjectOwner(Users projectOwner) {
+	public void setProjectOwner(User projectOwner) {
 		this.projectOwner = projectOwner;
 	}
 
