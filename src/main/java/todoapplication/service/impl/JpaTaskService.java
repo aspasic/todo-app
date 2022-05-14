@@ -3,11 +3,13 @@ package todoapplication.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import todoapplication.model.Task;
 import todoapplication.repository.TaskRepository;
 import todoapplication.service.TaskService;
 
+@Service
 public class JpaTaskService implements TaskService{
 
 	@Autowired
@@ -36,6 +38,11 @@ public class JpaTaskService implements TaskService{
 	@Override
 	public Task findByName(String name) {
 		return taskRepository.findByNameContainsIgnoreCase(name);
+	}
+
+	@Override
+	public List<Task> findAllByProjectId(Long id) {
+		return taskRepository.findByProjectId(id);
 	}
 
 }

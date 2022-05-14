@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import todoapplication.model.Label;
 import todoapplication.repository.LabelRepository;
 import todoapplication.service.LabelService;
 
+@Service
 public class JpaLabelService implements LabelService {
 
 	@Autowired

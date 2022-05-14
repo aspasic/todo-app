@@ -3,11 +3,13 @@ package todoapplication.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import todoapplication.model.Subtask;
 import todoapplication.repository.SubtaskRepository;
 import todoapplication.service.SubtaskService;
 
+@Service
 public class JpaSubtaskService implements SubtaskService{
 
 	@Autowired

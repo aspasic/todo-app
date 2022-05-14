@@ -1,21 +1,21 @@
 package todoapplication.support;
 
 
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Component;
-
-import todoapplication.model.Users;
-import todoapplication.web.dto.UsersDTO;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
+
+import todoapplication.model.User;
+import todoapplication.web.dto.UserDTO;
+
 @Component
-public class UsersToUsersDto implements Converter<Users, UsersDTO>{
+public class UsersToUsersDto implements Converter<User, UserDTO>{
 
     @Override
-    public UsersDTO convert(Users user) {
-        UsersDTO userDTO = new UsersDTO();
+    public UserDTO convert(User user) {
+        UserDTO userDTO = new UserDTO();
 
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
@@ -26,11 +26,11 @@ public class UsersToUsersDto implements Converter<Users, UsersDTO>{
         return userDTO;
     }
 
-    public List<UsersDTO> convert(List<Users> users){
-        List<UsersDTO> userDTOs = new ArrayList<>();
+    public List<UserDTO> convert(List<User> users){
+        List<UserDTO> userDTOs = new ArrayList<>();
 
-        for(Users u : users) {
-            UsersDTO dto = convert(u);
+        for(User u : users) {
+            UserDTO dto = convert(u);
             userDTOs.add(dto);
         }
 

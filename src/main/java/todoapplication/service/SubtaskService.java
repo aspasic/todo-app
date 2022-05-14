@@ -2,6 +2,8 @@ package todoapplication.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import todoapplication.model.Subtask;
 
 public interface SubtaskService {

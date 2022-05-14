@@ -2,6 +2,8 @@ package todoapplication.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import todoapplication.model.Task;
 
 public interface TaskService {
@@ -15,4 +17,6 @@ public interface TaskService {
 	void delete(Long id);
 	
 	Task findByName(String name);
+
+	List<Task> findAllByProjectId(Long id);
 }

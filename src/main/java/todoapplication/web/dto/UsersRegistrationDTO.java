@@ -2,7 +2,7 @@ package todoapplication.web.dto;
 
 
 
-public class UsersRegistrationDTO extends UsersDTO{
+public class UsersRegistrationDTO extends UserDTO{
 
     private String password;
 

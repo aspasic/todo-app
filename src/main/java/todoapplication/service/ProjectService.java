@@ -2,6 +2,8 @@ package todoapplication.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import todoapplication.model.Project;
 
 public interface ProjectService {
@@ -12,7 +14,13 @@ public interface ProjectService {
 	
 	Project save(Project project);
 	
-	void delete(Long id);
+	Project delete(Long id);
 	
 	Project findByName(String name);
+
+	List<Project> findByProjectOwner(Long id);
+
+	Project findOneById(Long id);
+
+	Project update(Project p);
 }
