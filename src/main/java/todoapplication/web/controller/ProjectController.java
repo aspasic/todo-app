@@ -50,11 +50,7 @@ public class ProjectController {
 	public ResponseEntity<List<ProjectDTO>> getAll(
 					@RequestParam(required = true) Long id) {
 	
-	System.out.println(" KLASA IDJA JE " + id.getClass());	
-	
 	List<Project> projects = projectService.findByProjectOwner(id);
-	
-	System.out.println("SIZE " + projects.size());	
 	
 	return new ResponseEntity<>(toProjectDto.convert(projects), HttpStatus.OK);
 	}
